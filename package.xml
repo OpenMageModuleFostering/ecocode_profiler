@@ -2,7 +2,7 @@
 <root>
   <name>Ecocode_Profiler</name>
   <channel>community</channel>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <description>&lt;h1 id="ecocode-profiler-magento-1-x-web-profiler"&gt;ecocode Profiler - Magento 1.x Web Profiler&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://travis-ci.org/ecoco/magento_profiler"&gt;&lt;img src="https://travis-ci.org/ecoco/magento_profiler.svg?branch=master" alt="Build Status"&gt;&lt;/a&gt;
 &lt;a href="https://coveralls.io/github/ecoco/magento_profiler?branch=master"&gt;&lt;img src="https://coveralls.io/repos/github/ecoco/magento_profiler/badge.svg?branch=master" alt="Coverage Status"&gt;&lt;/a&gt;
@@ -25,8 +25,8 @@ The concept and code of the WebProfiler have been ported to assist with Magento 
 &lt;li&gt;&lt;a href="http://1.9.2.4.magento-profiler.ecocode.de/dev.php"&gt;Profiler with Magento 1.9.2.4&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;p&gt;&lt;img src="https://github.com/ecoco/magento_profiler/raw/v1.1.0/docs/image/toolbar.jpg" alt="Toolbar" title="Toolbar"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://github.com/ecoco/magento_profiler/raw/v1.1.0/docs/image/profiler.jpg" alt="Profiler" title="Profiler"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/ecoco/magento_profiler/raw/v1.2.1/docs/image/toolbar.jpg" alt="Toolbar" title="Toolbar"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/ecoco/magento_profiler/raw/v1.2.1/docs/image/profiler.jpg" alt="Profiler" title="Profiler"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="docs/images.md"&gt;More Images&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
 &lt;h3 id="composer-recommended-"&gt;Composer (recommended)&lt;/h3&gt;
@@ -47,11 +47,11 @@ composer require --dev symfony/yaml 3.1
 composer require --dev jdorn/sql-formatter 1.2
 composer require --dev monolog/monolog 1.11
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id="magento-connect"&gt;Magento Connect&lt;/h3&gt;
-&lt;p&gt;In progress&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.magentocommerce.com/magento-connect/ecocode-profiler.html"&gt;ecocode Profiler&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="webserver-config"&gt;Webserver Config&lt;/h3&gt;
-&lt;p&gt;It might be necessary to extend your webserver config to handle &amp;quot;dev.php&amp;quot; correctly&lt;/p&gt;
+&lt;p&gt;It might be necessary to extend your webserver config to handle &amp;quot;dev.php&amp;quot; correctly. If your experiencing a 404 when you try to access &amp;quot;dev.php&amp;quot;&lt;/p&gt;
 &lt;h3 id="nginx-"&gt;Nginx:&lt;/h3&gt;
-&lt;p&gt;If you are using nginx and get a &lt;code&gt;404&lt;/code&gt; for the profiler, try adding the following to your nginx config before the php location definition:&lt;/p&gt;
+&lt;p&gt;try adding the following to your nginx config before the php location definition:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;location /dev.php/ {
     rewrite / /dev.php;
 }
@@ -136,17 +136,23 @@ time to time to verify the result.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="security"&gt;Security&lt;/h2&gt;
-&lt;p&gt;It should be safe to add this module to your own vcs by default. The profiler
-is only active when you are visiting your page via &amp;quot;dev.php&amp;quot;, which is restricted to 
-localhost by default.&lt;/p&gt;
-&lt;p&gt;If you are using a vm you can edit the &lt;code&gt;dev.php&lt;/code&gt; or set &lt;code&gt;$_SERVER[&amp;#39;ALLOW_PROFILER&amp;#39;] = 1&lt;/code&gt; 
-via your nginx or htaccess&lt;/p&gt;
+&lt;p&gt;It is safe to add this module to your own vcs by default. 
+The profiler is only active when you are visiting your page via &amp;quot;dev.php&amp;quot;, 
+which is restricted to request from localhost by default.&lt;/p&gt;
+&lt;p&gt;If you are using a vm you have to allow your host system to access the profiler. 
+This can be done by modify the webserver config or the dev.php itself&lt;/p&gt;
+&lt;p&gt;Webserver:
+To allow the access to the profiler you have to set &amp;quot;$_SERVER[&amp;#39;ALLOW_PROFILER&amp;#39;] = 1&amp;quot;&lt;/p&gt;
+&lt;p&gt;Nginx:
+&lt;code&gt;fastcgi_param ALLOW_PROFILER &amp;#39;1&amp;#39;;&lt;/code&gt;
+Apache:
+&lt;code&gt;SetEnv ALLOW_PROFILER &amp;quot;1&amp;quot;&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id="todo"&gt;TODO&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Session Data&lt;/li&gt;
-&lt;li&gt;Catch url redirects&lt;/li&gt;
 &lt;li&gt;Improve docs&lt;/li&gt;
 &lt;li&gt;&amp;quot;how to extend&amp;quot;&lt;/li&gt;
+&lt;li&gt;capture emails&lt;/li&gt;
+&lt;li&gt;performance tab&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="mixed"&gt;Mixed&lt;/h2&gt;
 &lt;p&gt;If you get a &lt;code&gt;gateway timeout 503&lt;/code&gt; instead of an error message please try to adjust your
@@ -170,8 +176,8 @@ nginx config&lt;/p&gt;
   <license>MIT</license>
   <stability>stable</stability>
   <notes/>
-  <date>2016-10-19</date>
-  <time>13:03:36</time>
+  <date>2016-10-24</date>
+  <time>12:58:09</time>
   <authors>
     <author>
       <name>Justus Krapp</name>
@@ -183,7 +189,7 @@ nginx config&lt;/p&gt;
     <required>
       <php>
         <min>5.5.9</min>
-        <max>7.0.10</max>
+        <max>7.9.9</max>
       </php>
     </required>
   </dependencies>
@@ -263,7 +269,7 @@ nginx config&lt;/p&gt;
                   </dir>
                   <dir name="request">
                     <file name="menu.phtml" hash="45de32145ba7d367dd400ffdfb726295"/>
-                    <file name="panel.phtml" hash="4d076b410586ac7ade04c672cb5c46c6"/>
+                    <file name="panel.phtml" hash="061e82853207ed7ae6a0e38c6799afa6"/>
                     <file name="toolbar.phtml" hash="401a608fb75bebcbd1cbdf336c033838"/>
                     <dir name="toolbar">
                       <file name="handler.phtml" hash="8bf3a498fb2d4cd0423be095be193db5"/>
@@ -382,7 +388,7 @@ nginx config&lt;/p&gt;
             </dir>
           </dir>
           <dir name="etc">
-            <file name="config.xml" hash="8003393b0794d688b33577d1d0e7def7"/>
+            <file name="config.xml" hash="8b7cd46f5ad86bf3b596e04a60858e91"/>
             <file name="development.xml" hash="5ca041f2c3683c795131c17276824e0a"/>
           </dir>
           <dir name="Helper">
@@ -416,7 +422,7 @@ nginx config&lt;/p&gt;
               <file name="DataCollectorInterface.php" hash="33082cfb75eedf75b6af2c6afac3d782"/>
               <file name="EventDataCollector.php" hash="b54c69b72dd4694c33a8934c4588aa14"/>
               <file name="LateDataCollectorInterface.php" hash="11f0136ac985fbadde129c2de7082df1"/>
-              <file name="LayoutDataCollector.php" hash="2a84dd0fa9d871ce903d3147b9f2bab3"/>
+              <file name="LayoutDataCollector.php" hash="7e4ffbc2a4f5d550265811b355d448ff"/>
               <file name="LogDataCollector.php" hash="ed5554e57957606f11debbf4f5d3b6a9"/>
               <file name="MemoryDataCollector.php" hash="6b9df2616c98fb717fe987650b05e839"/>
               <file name="ModelDataCollector.php" hash="f234954b4b88992bf50b818b00cb4446"/>
