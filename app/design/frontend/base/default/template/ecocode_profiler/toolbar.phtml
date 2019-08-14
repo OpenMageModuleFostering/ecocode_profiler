@@ -1,0 +1,75 @@
+<!-- START of ecocode Web Debug Toolbar -->
+<?php $token = $this->getToken(); ?>
+<style>
+    <?php include 'toolbar.css.phtml';?>
+</style>
+<div id="sfwdt<?php echo $token; ?>" class="sf-toolbar">
+    <div id="sfMiniToolbar-<?php echo $token; ?>" class="sf-minitoolbar" data-no-turbolink>
+        <a href="javascript:void(0);" title="Show Symfony toolbar" tabindex="-1" accesskey="D" onclick="
+            var elem = this.parentNode;
+            if (elem.style.display == 'none') {
+            document.getElementById('sfToolbarMainContent-<?php echo $token; ?>').style.display = 'none';
+            document.getElementById('sfToolbarClearer-<?php echo $token; ?>').style.display = 'none';
+            elem.style.display = 'block';
+            } else {
+            document.getElementById('sfToolbarMainContent-<?php echo $token; ?>').style.display = 'block';
+            document.getElementById('sfToolbarClearer-<?php echo $token; ?>').style.display = 'block';
+            elem.style.display = 'none'
+            }
+            ">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="svgMageLogo" width="24" xml:space="preserve" height="24" viewBox="0 0 53.692 62" baseProfile="" version="1.1" y="0px" x="0px">
+                <g fill="#AAAAAA">
+                    <path d="m26.845 8.857"></path><polygon points="53.692 15.5 53.692 46.5 46.021 50.929 46.021 19.929 26.845 8.857 7.67 19.928 7.67 50.929 0 46.5 0 15.5 26.845 0"></polygon><polygon points="26.847 62 15.341 55.356 15.341 24.357 23.011 19.928 23.011 50.929 26.845 53.257 30.682 50.929 30.682 19.929 38.353 24.357 38.353 55.356"></polygon>
+                </g>
+            </svg>
+        </a>
+    </div>
+
+    <div id="sfToolbarClearer-<?php echo $token; ?>" style="clear: both; height: 36px;"></div>
+
+    <?php
+    $action   = Mage::app()->getFrontController()->getAction();
+    $request  = Mage::app()->getRequest();
+    $response = Mage::app()->getResponse();
+    ?>
+    <div id="sfToolbarMainContent-<?php echo $token; ?>" class="sf-toolbarreset clear-fix" data-no-turbolink>
+        <?php foreach ($this->getToolbarItems() as $block): ?>
+            <?php echo $block->toHtml(); ?>
+        <?Php endforeach;?>
+
+        <a class="hide-button" title="Close Toolbar" tabindex="-1" accesskey="D" onclick="
+            var p = this.parentNode;
+            p.style.display = 'none';
+            (p.previousElementSibling || p.previousSibling).style.display = 'none';
+            document.getElementById('sfMiniToolbar-<?php echo $token; ?>').style.display = 'block';
+            ">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
+                 viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+        <path fill="#AAAAAA" d="M21.1,18.3c0.8,0.8,0.8,2,0,2.8c-0.4,0.4-0.9,0.6-1.4,0.6s-1-0.2-1.4-0.6L12,14.8l-6.3,6.3
+            c-0.4,0.4-0.9,0.6-1.4,0.6s-1-0.2-1.4-0.6c-0.8-0.8-0.8-2,0-2.8L9.2,12L2.9,5.7c-0.8-0.8-0.8-2,0-2.8c0.8-0.8,2-0.8,2.8,0L12,9.2
+            l6.3-6.3c0.8-0.8,2-0.8,2.8,0c0.8,0.8,0.8,2,0,2.8L14.8,12L21.1,18.3z"/>
+        </svg>
+
+        </a>
+    </div>
+</div>
+
+<!-- END of Symfony Web Debug Toolbar -->
+
+
+<style>
+    /*remove me*/
+    .sf-toggle-content {
+        -moz-transition: display .25s ease;
+        -webkit-transition: display .25s ease;
+        transition: display .25s ease;
+    }
+
+    .sf-toggle-content.sf-toggle-hidden {
+        display: none !important;
+    }
+
+    .sf-toggle-content.sf-toggle-visible {
+        display: block !important;
+    }
+</style>

@@ -1,0 +1,63 @@
+<?php
+$prefix        = $this->getData('prefix');
+$contextHelper = Mage::helper('ecocode_profiler/context');
+
+/** @var Ecocode_Profiler_Helper_Renderer $rendererHelper */
+$rendererHelper = Mage::helper('ecocode_profiler/renderer');
+?>
+<table class="alt queries-table">
+    <thead>
+    <tr>
+        <th class="nowrap">#</th>
+        <th class="nowrap">Connection</th>
+        <th class="nowrap">Time<span></span></th>
+        <th style="width: 100%;">Info</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->getData('queries') as $index => $queryData): ?>
+        <tr data-type="<?php echo $queryData['type']?>" data-connection="<?php echo $queryData['connection'] ?>">
+            <td class="nowrap"><?php echo $index + 1 ?> </td>
+            <td class="nowrap"><?php echo $queryData['connection'] ?> </td>
+            <td class="nowrap"><?php echo sprintf('%0.2f', $queryData['time'] * 1000) ?> ms</td>
+            <td>
+                <?php echo $queryData['sql_highlighted']; ?>
+                <div>
+                    <strong class="font-normal text-small">Parameters</strong>:
+                    <?php echo $this->dumpParameters($queryData['params']) ?>
+
+                </div>
+                <div>
+                    <?php echo $contextHelper->render($prefix, $queryData['context']); ?>
+                </div>
+
+                <div class="text-small font-normal">
+                    <?php if (isset($queryData['trace'])): ?>
+                        <a href="#" class="sf-toggle link-inverse"
+                           data-toggle-selector="#stack-<?php echo $prefix . $index ?>"
+                           data-toggle-alt-content="Hide stack trace">Show trace</a>
+                    <?php endif; ?>
+                    <a href="#" class="sf-toggle link-inverse"
+                       data-toggle-selector="#formatted-query-<?php echo $prefix . $index ?>"
+                       data-toggle-alt-content="Hide formatted query">View formatted query</a>
+                    <a href="#" class="sf-toggle link-inverse"
+                       data-toggle-selector="#original-query-<?php echo $prefix . $index ?>"
+                       data-toggle-alt-content="Hide runnable query">View runnable query</a>
+                </div>
+
+                <div id="formatted-query-<?php echo $prefix . $index ?>" class="sql-runnable hidden">
+                    <?php echo $queryData['sql_formatted']; ?>
+                </div>
+
+                <div id="original-query-<?php echo $prefix . $index ?>" class="sql-runnable hidden">
+                    <?php echo $queryData['sql_runnable']; ?>
+                </div>
+
+                <?php if (isset($queryData['trace'])): ?>
+                    <?php echo $rendererHelper->renderBackTrace($prefix . $index, $queryData['trace']) ?>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

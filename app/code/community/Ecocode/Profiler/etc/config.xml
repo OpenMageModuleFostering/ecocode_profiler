@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecocode_Profiler>
+            <version>1.1.0</version>
+        </Ecocode_Profiler>
+    </modules>
+</config>

@@ -1,0 +1,51 @@
+<?php
+/** @var Ecocode_Profiler_Block_Collector_Base $this */
+
+/** @var Ecocode_Profiler_Model_Collector_RequestDataCollector $collector */
+$collector = $this->getCollector();
+$token = $this->getToken();
+$requestStatusCodeColor = $collector->getStatusCode() >= 400 ? 'red' : $collector->getStatusCode()  >= 300 ? 'yellow' : 'green';
+?>
+
+<div class="sf-toolbar-block sf-toolbar-block-<?php echo $collector->getName()?> sf-toolbar-status-normal ">
+    <a target="_blank" href="<?php echo Mage::helper('ecocode_profiler')->getCollectorUrl($token, $collector); ?>">
+        <div class="sf-toolbar-icon">
+            <span class="sf-toolbar-status sf-toolbar-status-<?php echo $requestStatusCodeColor?>"><?php echo $collector->getStatusCode()?></span>
+            <?php if($collector->getRoute()): ?>
+                <span class="sf-toolbar-label"><?php echo $collector->getMethod() !== 'GET' ? $collector->getMethod() : ''?> @</span>
+                <span class="sf-toolbar-value sf-toolbar-info-piece-additional"><?php echo $collector->getRoute()?></span>
+            <?php endif?>
+        </div>
+    </a>
+    <div class="sf-toolbar-info">
+        <div class="sf-toolbar-info-group">
+            <div class="sf-toolbar-info-piece">
+                <b>HTTP status</b>
+                <span><?php echo $collector->getStatusCode() ?></span>
+            </div>
+
+
+            <div class="sf-toolbar-info-piece">
+                <b>Route Name</b><span><?php echo $collector->getRoute() ?></span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Module</b><span><?php echo $collector->getModuleName() ?></span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Controller</b>
+                <span><?php echo $collector->getControllerName() ?>::<?php echo $collector->getActionName() ?> </span>
+            </div>
+
+            <?php $controllerData = $collector->getController(); ?>
+            <div class="sf-toolbar-info-piece">
+                <b>Controller class</b>
+                <span><?php echo $controllerData['class'] ?></span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Full action name</b>
+                <span><?php echo $collector->getRoute(); ?></span>
+            </div>
+        </div>
+
+    </div>
+</div>
