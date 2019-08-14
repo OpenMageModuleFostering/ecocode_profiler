@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "MIT",
     "homepage": "",
-    "description": "",
+    "description": "Web Profiler for Magento 1.x",
     "authors": [
     {
         "name": "Justus Krapp",

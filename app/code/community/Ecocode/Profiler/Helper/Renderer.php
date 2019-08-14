@@ -6,29 +6,42 @@
 class Ecocode_Profiler_Helper_Renderer
     extends Mage_Core_Helper_Abstract
 {
-    protected $backTraceRenderer;
+    protected $renderer = [];
 
-    public function get($name)
+    public function renderBag($bag, array $data = [])
     {
+        $data['bag'] = $bag;
 
+        return $this->getInstance('bag')
+            ->render($data);
     }
 
-
-    public function renderBackTrace($id, $trace)
+    public function renderTable($data, $labels = null)
     {
-        return $this->getBackTraceRenderer()
-            ->setData(['id' => $id, 'trace' => $trace])
-            ->toHtml();
+        return $this->getInstance('table')
+            ->render(['items' => $data, 'labels' => $labels]);
+    }
+
+    public function renderCallStack($id, $stack, $wrap = true)
+    {
+        return $this->getInstance('callStack')
+            ->render(['id' => $id, 'stack' => $stack, 'wrap' => $wrap]);
     }
 
     /**
-     * @return Ecocode_Profiler_Block_Renderer_BackTrace
+     * @param $name
+     * @return Ecocode_Profiler_Block_Renderer_RendererInterface
      */
-    public function getBackTraceRenderer()
+    public function getInstance($name)
     {
-        if ($this->backTraceRenderer === null) {
-            $this->backTraceRenderer = Mage::app()->getLayout()->createBlock('ecocode_profiler/renderer_backTrace');
+        if (strpos($name, '/') === false) {
+            $name = 'ecocode_profiler/renderer_' . $name;
         }
-        return $this->backTraceRenderer;
+
+        if (!isset($this->renderer[$name])) {
+            $this->renderer[$name] = Mage::app()->getLayout()->createBlock($name);
+        }
+
+        return $this->renderer[$name];
     }
 }

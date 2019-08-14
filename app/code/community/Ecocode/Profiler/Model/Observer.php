@@ -44,6 +44,7 @@ class Ecocode_Profiler_Model_Observer
             $response->setHeader('X-Debug-Token-Link', $url);
         }
 
+
         $this->injectToolbar($response, $request, $token);
     }
 
@@ -102,6 +103,26 @@ class Ecocode_Profiler_Model_Observer
         }
 
         return $this->profiler;
+    }
+
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function checkRedirect()
+    {
+        if (Mage::getSingleton('ecocode_profiler/session')->getData('eco_redirect')) {
+            Mage::app()->getRequest()->setParam('_redirected', true);
+        }
+    }
+
+    public function captureFlashMessages()
+    {
+        $collector = $this->getProfiler()->getDataCollector('request');
+        /** @var Ecocode_Profiler_Model_Collector_RequestDataCollector $collector */
+        if($collector) {
+            $collector->captureFlashMessages();
+        }
     }
 
 

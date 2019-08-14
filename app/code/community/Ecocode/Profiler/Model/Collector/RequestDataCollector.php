@@ -6,6 +6,8 @@
 class Ecocode_Profiler_Model_Collector_RequestDataCollector
     extends Ecocode_Profiler_Model_Collector_AbstractDataCollector
 {
+    protected $messages = [];
+
     public static $statusTexts = [
         100 => 'Continue',
         101 => 'Switching Protocols',
@@ -81,23 +83,6 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
         $requestHeaders    = $this->collectRequestHeaders($request);
         $requestContent    = $request->getRawBody();
 
-        $sessionMetadata   = [];
-        $sessionAttributes = [];
-        //@TODO get all magento session singletons to split them by namespace
-        $flashes           = [];
-
-        /*
-        $session           = null
-        if (false && $request->hasSession()) {
-                    $session = $request->getSession();
-                    if ($session->isStarted()) {
-                        $sessionMetadata['Created']   = date(DATE_RFC822, $session->getMetadataBag()->getCreated());
-                        $sessionMetadata['Last used'] = date(DATE_RFC822, $session->getMetadataBag()->getLastUsed());
-                        $sessionMetadata['Lifetime']  = $session->getMetadataBag()->getLifetime();
-                        $sessionAttributes            = $session->all();
-                        $flashes                      = $session->getFlashBag()->peekAll();
-                    }
-                }*/
 
         $statusCode = $this->detectStatusCode($response);
         $statusText = isset(self::$statusTexts[$statusCode]) ? self::$statusTexts[$statusCode] : '';
@@ -117,9 +102,9 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
             'request_cookies'    => $request->getCookie(),
             'request_attributes' => $requestAttributes,
             'response_headers'   => $responseHeaders,
-            'session_metadata'   => $sessionMetadata,
-            'session_attributes' => $sessionAttributes,
-            'flashes'            => $flashes,
+            'session_metadata'   => [],
+            'session_data'       => [],
+            'messages'           => [],
             'path_info'          => $request->getPathInfo(),
             'controller'         => 'n/a',
             //'locale'             => $request->getLocale(),
@@ -132,22 +117,139 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
             $this->data['controller'] = $controllerData;
         }
 
-        /*if (null !== $session && $session->isStarted()) {
-            if ($request->attributes->has('_redirected')) {
-                $this->data['redirect'] = $session->remove('sf_redirect');
+        $this->collectRedirectData($request, $response);
+        $this->collectSessionData();
+        $this->collectFlashMessages();
+    }
+
+    protected function collectRedirectData(
+        Mage_Core_Controller_Request_Http $request,
+        Mage_Core_Controller_Response_Http $response
+    )
+    {
+        /** @var $session Ecocode_Profiler_Model_Session $session */
+        $session = $this->getHelper()->getSession();
+        if (null !== $session) {
+            if ($request->getParam('_redirected')) {
+                $this->data['redirect'] = $session->getData('eco_redirect', true);
             }
 
             if ($response->isRedirect()) {
-                $session->set('sf_redirect', [
-                    'token'       => $response->headers->get('x-debug-token'),
-                    'route'       => $request->attributes->get('_route', 'n/a'),
+                $session->setData('eco_redirect', [
+                    'token'       => $this->getHelper()->getTokenFromResponse($response),
+                    'route'       => $this->getRoute(),
                     'method'      => $request->getMethod(),
-                    'controller'  => $this->parseController($request->attributes->get('_controller')),
-                    'status_code' => $statusCode,
-                    'status_text' => Response::$statusTexts[(int)$statusCode],
+                    'controller'  => $this->getController(),
+                    'status_code' => $this->getStatusCode(),
+                    'status_text' => $this->getStatusText(),
                 ]);
             }
-        }*/
+        }
+    }
+
+    protected function collectSessionData()
+    {
+        $namespaceData  = [];
+        $storeData      = [];
+        $rawSessionData = $this->getRawSession();
+
+        $defaultSessionData = [
+            '_session_validator_data' => false,
+            'session_hosts'           => false
+        ];
+
+
+        foreach ($rawSessionData as $key => $data) {
+            if (isset($data['messages'])) {
+                //dont save messages here
+                unset($data['messages']);
+            }
+
+            if (isset($data['_session_validator_data'])) {
+                unset($rawSessionData[$key]);
+                //magento session model
+                $filtered = array_diff_key($data, $defaultSessionData);
+
+                if (count($filtered) === 0) {
+                    continue;
+                }
+
+                if (strpos($key, 'store_') === 0) {
+                    $storeCode                 = str_replace('store_', '', $key);
+                    $storeData[$storeCode] = $data;
+                } else {
+                    $namespaceData[$key] = $data;
+                }
+
+
+            }
+
+        }
+        //add the missing data to a global namespace
+        $this->data['session_data'] = [
+            'namespace' => $namespaceData,
+            'store'     => $storeData,
+            'global'    => $rawSessionData,
+        ];
+    }
+
+    /**
+     * @return Mage_Core_Model_Message_Collection
+     */
+    protected function getSessionList()
+    {
+        $rawSessionData = $this->getRawSession();
+        $sessionList    = [];
+        foreach (Mage::getAllRegistryEntries() as $session) {
+            if ($session instanceof Mage_Core_Model_Session_Abstract) {
+                $namespace               = array_search($session->getData(), $rawSessionData);
+                $sessionList[$namespace] = $session;
+            }
+        }
+
+        return $sessionList;
+    }
+
+    protected function collectFlashMessages()
+    {
+        $messages    = [];
+        $sessionList = $this->getSessionList();
+        $helper      = $this->getHelper();
+
+        foreach ($this->messages as $message) {
+            $namespace = $message['namespace'];
+
+            $session                = $sessionList[$namespace];
+            $message['class_group'] = $helper->resolveClassGroup($session);
+
+            $messages[] = $message;
+        }
+
+        $this->data['messages'] = $messages;
+    }
+
+    public function captureFlashMessages()
+    {
+        $messages = [];
+        foreach ($this->getRawSession() as $namespace => $data) {
+            if (!isset($data['messages'])) {
+                continue;
+            }
+
+            if ($data['messages']->count()) {
+                foreach ($data['messages']->getItems() as $message) {
+                    /** @var Mage_Core_Model_Message_Abstract $message */
+
+                    $messages[] = [
+                        'namespace' => $namespace,
+                        'type'      => $message->getType(),
+                        'text'      => $message->getText(),
+                    ];
+                }
+            }
+        }
+
+        $this->messages = $messages;
     }
 
     protected function hideAuthData()
@@ -217,12 +319,12 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
 
     public function getSessionAttributes()
     {
-        return $this->data['session_attributes'];
+        return $this->data['session_data'];
     }
 
-    public function getFlashes()
+    public function getMessages()
     {
-        return $this->data['flashes'];
+        return $this->data['messages'];
     }
 
     public function getContent()
@@ -331,7 +433,7 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
      */
     public function getController()
     {
-        return $this->data['controller'];
+        return $this->getData('controller', []);
     }
 
     /**
@@ -342,9 +444,18 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
      */
     public function getRedirect()
     {
-        return isset($this->data['redirect']) ? $this->data['redirect'] : false;
+        return $this->getData('redirect', false);
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @SuppressWarnings("superglobals")
+     * @return array
+     */
+    protected function getRawSession()
+    {
+        return isset($_SESSION) ? $_SESSION : [];
+    }
 
     /**
      * {@inheritdoc}
@@ -365,19 +476,50 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
     protected function parseController($controller)
     {
         if (is_object($controller)) {
-            $r = new \ReflectionClass($controller);
+            /** @var Mage_Core_Controller_Varien_Front $controller */
+
+            if ($controller->getData('action')) {
+                /** @var Mage_Core_Controller_Varien_Action $actionController */
+                $actionController = $controller->getData('action');
+
+                /** @var Mage_Core_Controller_Request_Http $request */
+                $request = $actionController->getRequest();
+
+                if ($actionController->hasAction($request->getActionName())) {
+                    $actionReflection = new \ReflectionMethod(
+                        $actionController,
+                        $actionController->getActionMethodName($request->getActionName())
+                    );
+
+                    return [
+                        'class'  => get_class($actionController),
+                        'method' => $actionReflection->getName(),
+                        'file'   => $actionReflection->getFileName(),
+                        'line'   => $actionReflection->getStartLine(),
+                    ];
+                }
+            }
+
+            $controllerReflection = new \ReflectionClass($controller);
 
             return [
-                'class'  => $r->getName(),
+                'class'  => $controllerReflection->getName(),
                 'method' => null,
-                'file'   => $r->getFileName(),
-                'line'   => $r->getStartLine(),
+                'file'   => $controllerReflection->getFileName(),
+                'line'   => $controllerReflection->getStartLine(),
             ];
         }
 
         return (string)$controller ?: 'n/a';
     }
 
+    /**
+     * Magento is not very good in setting the right response code
+     * so we help out a bit by checking the actual header that is send
+     *
+     * @param Mage_Core_Controller_Response_Http $response
+     * @return int
+     */
     protected function detectStatusCode(Mage_Core_Controller_Response_Http $response)
     {
         $statusCode = $response->getHttpResponseCode();
@@ -422,13 +564,13 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
             $attributes['_route_params'] = $routeParams;
         }
 
-
         return $attributes;
     }
 
     public function collectRequestHeaders(Mage_Core_Controller_Request_Http $request)
     {
         $headers = [];
+
         foreach ($request->getServer() as $key => $value) {
             if (substr($key, 0, 5) !== 'HTTP_') {
                 continue;
@@ -436,26 +578,23 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
             $header           = str_replace(' ', '-', (str_replace('_', ' ', strtolower(substr($key, 5)))));
             $headers[$header] = $value;
         }
+
         return $headers;
     }
 
     public function collectRequestQuery(Mage_Core_Controller_Request_Http $request)
     {
-        $getData = $request->getQuery();
-        if ($getData === null) {
-            $getData = [];
-        }
-        return $getData;
+        $queryData = $request->getQuery();
+
+        return $queryData ? $queryData : [];
     }
 
 
     public function collectRequestData(Mage_Core_Controller_Request_Http $request)
     {
         $postData = $request->getPost();
-        if ($postData === null) {
-            $postData = [];
-        }
-        return $postData;
+
+        return $postData ? $postData : [];
     }
 
     protected function collectControllerData()
@@ -468,7 +607,9 @@ class Ecocode_Profiler_Model_Collector_RequestDataCollector
 
         $app        = Mage::app();
         $controller = $property->getValue($app);
+
         if ($controller) {
+            /** @var Mage_Core_Controller_Varien_Action */
             return $this->parseController($controller);
         }
 

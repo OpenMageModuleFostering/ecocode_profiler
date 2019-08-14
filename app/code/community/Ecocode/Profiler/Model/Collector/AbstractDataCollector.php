@@ -9,33 +9,32 @@ abstract class Ecocode_Profiler_Model_Collector_AbstractDataCollector
 {
     protected $data = [];
 
+    protected $helper;
     protected $contextHelper;
-
 
     public function init()
     {
         //fill if needed
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return string
+     */
     public function serialize()
     {
         return serialize($this->data);
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @param string $data
+     */
     public function unserialize($data)
     {
         $this->data = unserialize($data);
     }
 
-    public function getBlockPanelName()
-    {
-        return $this->getName() . '_panel';
-    }
-
-    public function getBlockMenuName()
-    {
-        return $this->getName() . '_menu';
-    }
 
     public function getBlockToolbarName()
     {
@@ -60,6 +59,7 @@ abstract class Ecocode_Profiler_Model_Collector_AbstractDataCollector
     }
 
     /**
+     * @codeCoverageIgnore
      * @return Ecocode_Profiler_Helper_Context
      */
     public function getContextHelper()
@@ -71,6 +71,24 @@ abstract class Ecocode_Profiler_Model_Collector_AbstractDataCollector
         return $this->contextHelper;
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return Ecocode_Profiler_Helper_Data
+     */
+    protected function getHelper()
+    {
+        if ($this->helper === null) {
+            $this->helper = Mage::helper('ecocode_profiler');
+        }
+
+        return $this->helper;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @param int $options
+     * @return array|bool
+     */
     protected function getBacktrace($options = DEBUG_BACKTRACE_PROVIDE_OBJECT)
     {
         if (!function_exists('debug_backtrace')) {

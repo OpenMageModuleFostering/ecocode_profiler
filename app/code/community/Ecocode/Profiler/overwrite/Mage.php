@@ -28,16 +28,17 @@ if (!file_exists($mageCacheFile)) {
 
     file_put_contents($mageCacheFile, $mageCode);
 }
-
-require_once $mageCacheFile;
+//register overwrite
+Ecocode_Profiler_Autoloader::getAutoloader()
+    ->addToClassMap('MageOriginal', $mageCacheFile);
 
 
 class Mage extends MageOriginal
 {
-    protected static $_logChannels = [];
+    protected static $logChannels = [];
 
-    protected static $_logger;
-    protected static $_loggerDebugHandler;
+    protected static $logger;
+    protected static $loggerDebugHandler;
 
     /**
      * @return Ecocode_Profiler_Model_Logger
@@ -47,34 +48,35 @@ class Mage extends MageOriginal
         if ($channel === null) {
             return static::getDefaultLogger();
         }
-        if (!isset(static::$_logChannels[$channel])) {
-            static::$_logChannels[$channel] = static::getNewLogger($channel);
+        if (!isset(static::$logChannels[$channel])) {
+            static::$logChannels[$channel] = static::getNewLogger($channel);
         }
 
-        return static::$_logChannels[$channel];
+        return static::$logChannels[$channel];
     }
 
     public static function getDefaultLogger()
     {
-        if (static::$_logger === null) {
-            static::$_logger = static::getNewLogger('default');
+        if (static::$logger === null) {
+            static::$logger = static::getNewLogger('default');
         }
 
-        return static::$_logger;
+        return static::$logger;
     }
 
     protected static function getNewLogger($channel)
     {
         if (!@class_exists('\Monolog\Logger')) {
-            return false;
+            return new Ecocode_Profiler_Model_NullLogger();
         }
-        if (static::$_loggerDebugHandler === null) {
-            static::$_loggerDebugHandler = new Ecocode_Profiler_Model_Logger_DebugHandler();
+
+        if (static::$loggerDebugHandler === null) {
+            static::$loggerDebugHandler = new Ecocode_Profiler_Model_Logger_DebugHandler();
         }
 
         return new Ecocode_Profiler_Model_Logger(
             $channel,
-            [static::$_loggerDebugHandler]
+            [static::$loggerDebugHandler]
         );
     }
 

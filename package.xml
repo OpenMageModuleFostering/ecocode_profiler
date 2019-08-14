@@ -2,7 +2,7 @@
 <root>
   <name>Ecocode_Profiler</name>
   <channel>community</channel>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <description>&lt;h1 id="ecocode-profiler-magento-1-x-web-profiler"&gt;ecocode Profiler - Magento 1.x Web Profiler&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://travis-ci.org/ecoco/magento_profiler"&gt;&lt;img src="https://travis-ci.org/ecoco/magento_profiler.svg?branch=master" alt="Build Status"&gt;&lt;/a&gt;
 &lt;a href="https://coveralls.io/github/ecoco/magento_profiler?branch=master"&gt;&lt;img src="https://coveralls.io/repos/github/ecoco/magento_profiler/badge.svg?branch=master" alt="Coverage Status"&gt;&lt;/a&gt;
@@ -26,7 +26,7 @@ The concept and code of the WebProfiler have been ported to assist with Magento 
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;img src="https://github.com/ecoco/magento_profiler/raw/v1.1.0/docs/image/toolbar.jpg" alt="Toolbar" title="Toolbar"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="/docs/image/profiler.jpg" alt="Profiler" title="Profiler"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://github.com/ecoco/magento_profiler/raw/v1.1.0/docs/image/profiler.jpg" alt="Profiler" title="Profiler"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="docs/images.md"&gt;More Images&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="installation"&gt;Installation&lt;/h2&gt;
 &lt;h3 id="composer-recommended-"&gt;Composer (recommended)&lt;/h3&gt;
@@ -166,12 +166,12 @@ nginx config&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://github.com/symfony/web-profiler-bundle"&gt;Symfony WebProfiler&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-  <summery>Web Profiler for Magento 1.x</summery>
+  <summary>Web Profiler for Magento 1.x</summary>
   <license>MIT</license>
   <stability>stable</stability>
   <notes/>
-  <date>2016-10-11</date>
-  <time>19:23:09</time>
+  <date>2016-10-19</date>
+  <time>13:03:36</time>
   <authors>
     <author>
       <name>Justus Krapp</name>
@@ -204,16 +204,10 @@ nginx config&lt;/p&gt;
         <dir name="base">
           <dir name="default">
             <dir name="layout">
-              <file name="ecocode_profiler.xml" hash="77c53c870841abec7e9b991d3d13be23"/>
+              <file name="ecocode_profiler.xml" hash="b5da16729622d244ddf1d6e885d86f3a"/>
             </dir>
             <dir name="template">
               <dir name="ecocode_profiler">
-                <file name="back-trace.phtml" hash="3e87214048db56081377577284b0ed92"/>
-                <file name="bag.phtml" hash="bd4363dfe3f58bb352cd2f7aecc220a0"/>
-                <file name="layout.phtml" hash="4b7a285bcf3811a63089f23de5f7bb2a"/>
-                <file name="toolbar_js.phtml" hash="4c55d25dba7c8528fc12fb132cf95670"/>
-                <file name="toolbar.css.phtml" hash="e69c6cab4024a1c92859bd6d9a5c90bc"/>
-                <file name="toolbar.phtml" hash="8fcffc1866e836ddd02939c67b75cc26"/>
                 <dir name="collector">
                   <dir name="ajax">
                     <file name="toolbar.phtml" hash="82f3f425377c110b2b2931c0a2021b5e"/>
@@ -224,7 +218,7 @@ nginx config&lt;/p&gt;
                   <dir name="cache">
                     <file name="menu.phtml" hash="7c84720f0d33760a719d1700fb4aeb90"/>
                     <file name="panel.phtml" hash="4ec12213e351cf5b8ef33710abeee8eb"/>
-                    <file name="toolbar.phtml" hash="ef01eabfdee95829d4f4a6e71daac816"/>
+                    <file name="toolbar.phtml" hash="ffd9ccf2313dee1cc874596a535d4135"/>
                   </dir>
                   <dir name="config">
                     <file name="menu.phtml" hash="3413b99ba04b314a14c1ee3394ea0cde"/>
@@ -248,7 +242,7 @@ nginx config&lt;/p&gt;
                     <file name="panel.phtml" hash="c1580c5591d9ed1e7508223e0440139e"/>
                     <file name="toolbar.phtml" hash="f9f4c1aa7eb6e2b4c5f9fb29c4355c3b"/>
                     <dir name="panel">
-                      <file name="log-table.phtml" hash="0d305d9cecc0f8cd2daa559577f22e59"/>
+                      <file name="log-table.phtml" hash="e4cfab2b0c96318fef683f78898c7ccc"/>
                     </dir>
                   </dir>
                   <dir name="memory">
@@ -256,21 +250,24 @@ nginx config&lt;/p&gt;
                   </dir>
                   <dir name="model">
                     <file name="menu.phtml" hash="00a2226bc05b0fef429160ecafd60204"/>
-                    <file name="panel.phtml" hash="fb85a775faea43e0fddc3e71179e8310"/>
+                    <file name="panel.phtml" hash="152f1fc963b64f744e8159deaf4a8b5c"/>
                     <file name="toolbar.phtml" hash="cbd77333b03d1ade489c249346b4e5fe"/>
                   </dir>
                   <dir name="mysql">
-                    <file name="menu.phtml" hash="e9ff757f0330116f232961470ab63ffe"/>
-                    <file name="panel.phtml" hash="c291f1492478fe99ffd90efc974d041d"/>
+                    <file name="menu.phtml" hash="6574552d5af1354947dd63579966f1ef"/>
+                    <file name="panel.phtml" hash="c3400e82754e1a9dd2cdf7134acbc384"/>
                     <file name="toolbar.phtml" hash="166394a1bef92a73f3a9c60b35249eb9"/>
                     <dir name="panel">
-                      <file name="query-table.phtml" hash="68d4a6d2206477ef1d4ecca49ceda721"/>
+                      <file name="query-table.phtml" hash="8d23dce7ce3160f6a1b8a1d7fbdad4a8"/>
                     </dir>
                   </dir>
                   <dir name="request">
                     <file name="menu.phtml" hash="45de32145ba7d367dd400ffdfb726295"/>
-                    <file name="panel.phtml" hash="2b4543345ad9ab659d165f71b0837539"/>
-                    <file name="toolbar.phtml" hash="d31ee40313be5c70d844bf85204432d4"/>
+                    <file name="panel.phtml" hash="4d076b410586ac7ade04c672cb5c46c6"/>
+                    <file name="toolbar.phtml" hash="401a608fb75bebcbd1cbdf336c033838"/>
+                    <dir name="toolbar">
+                      <file name="handler.phtml" hash="8bf3a498fb2d4cd0423be095be193db5"/>
+                    </dir>
                   </dir>
                   <dir name="rewrite">
                     <file name="menu.phtml" hash="881118b3135e5a2f15e2cb8072b0c2ed"/>
@@ -285,7 +282,7 @@ nginx config&lt;/p&gt;
                     <file name="panel.phtml" hash="1eef90a79983a141c1db14ca0bcd2afb"/>
                     <file name="toolbar.phtml" hash="12702548344ed6a63487394201f0eb56"/>
                     <dir name="panel">
-                      <file name="table.phtml" hash="e0f080dbe249cede69b8f566dd7be82c"/>
+                      <file name="table.phtml" hash="0da6fb9967dbd157e277b7a922dc913f"/>
                     </dir>
                   </dir>
                 </dir>
@@ -296,17 +293,24 @@ nginx config&lt;/p&gt;
                   </dir>
                 </dir>
                 <dir name="profiler">
-                  <file name="base.css.phtml" hash="5aa4306149ccb84867915bce7e4a5f12"/>
+                  <file name="base.css.phtml" hash="50868e27ca6e15f0871de0480b383851"/>
                   <file name="base.js.phtml" hash="dc8fdc11af0a8458aceee4766e337620"/>
-                  <file name="summery.phtml" hash="9a71359e8e47ded85f55299aed93371e"/>
+                  <file name="summery.phtml" hash="6e820500d76017d6e504cee4453191cb"/>
                   <dir name="search">
                     <file name="results.phtml" hash="970d81fff56177afcc882f8efb467f7e"/>
                     <file name="summery.phtml" hash="7d3e70179beef079a5efde9fea6dd504"/>
                   </dir>
                 </dir>
                 <dir name="renderer">
-                  <file name="context.phtml" hash="38f3f9e0b17f96eb6e01332e78337f55"/>
+                  <file name="bag.phtml" hash="71f989e10d23a657bd7c533ff4449c6a"/>
+                  <file name="call-stack.phtml" hash="2b239a6c3f8423be2b3fb950c4180dba"/>
+                  <file name="context.phtml" hash="32e77b1d1fa23ead577fae3d70ff4b62"/>
+                  <file name="table.phtml" hash="faa3d12ffe1b125a1a41d92f4ddf1310"/>
                 </dir>
+                <file name="layout.phtml" hash="8fc45406e12d811f30fc577ef8f2d911"/>
+                <file name="toolbar_js.phtml" hash="d00323459ef6e5099739b150cee9ea01"/>
+                <file name="toolbar.css.phtml" hash="e69c6cab4024a1c92859bd6d9a5c90bc"/>
+                <file name="toolbar.phtml" hash="8fcffc1866e836ddd02939c67b75cc26"/>
               </dir>
             </dir>
           </dir>
@@ -316,22 +320,23 @@ nginx config&lt;/p&gt;
     <target name="magecommunity">
       <dir name="Ecocode">
         <dir name="Profiler">
-          <file name="autoloader.php" hash="625350c21fc1ce3b298e5cef41198308"/>
-          <file name="debug.php" hash="f5b9e0a679f16a948f540b2e7fa6c25b"/>
+          <file name="autoloader.php" hash="4b9869094f4efcaab59cc143565d902e"/>
+          <file name="debug.php" hash="cc76ccaa500dee58a07a80ad9c6b260c"/>
           <dir name="Block">
-            <file name="Bag.php" hash="6f574bbd70410b7cc4198c88131ab9fd"/>
-            <file name="Toolbar.php" hash="f1a247c7cc273598d80d0b3c69263536"/>
             <dir name="Collector">
-              <file name="Base.php" hash="8f6852999389c3e6159c93a8dc21a3a7"/>
+              <file name="Base.php" hash="a0048075f2194c3601da2405309e1393"/>
               <file name="Menu.php" hash="be064554e1868ef0d06d0a9393fbe460"/>
               <dir name="Layout">
-                <file name="Panel.php" hash="a3250d15e46573d07e6be930bff09bbc"/>
+                <file name="Panel.php" hash="2de5d0fcb4e801844d0555a4112f8122"/>
               </dir>
               <dir name="Log">
                 <file name="Panel.php" hash="7836cb8d57f778765c433e1887908aac"/>
               </dir>
               <dir name="Mysql">
-                <file name="Panel.php" hash="95c41d688e01ab371a8b74a207342e07"/>
+                <file name="Panel.php" hash="bd27db5270af5d74a67bded11d9026b3"/>
+              </dir>
+              <dir name="Request">
+                <file name="Toolbar.php" hash="6926ed38ee5720a4164bc3819056ed3e"/>
               </dir>
               <dir name="Translation">
                 <file name="Panel.php" hash="f3da35eb4848ad9bc8baa99f89ae6748"/>
@@ -344,24 +349,30 @@ nginx config&lt;/p&gt;
               </dir>
             </dir>
             <dir name="Renderer">
-              <file name="AbstractRenderer.php" hash="451a64191ddd17741195511b357179f0"/>
-              <file name="BackTrace.php" hash="7bf2d900481bed0c5a06613ab687b7ef"/>
+              <file name="AbstractRenderer.php" hash="0c280a33220e1cc55c9f9238499feac5"/>
+              <file name="Bag.php" hash="bf286a4897097c6ee3891b5b000c4343"/>
+              <file name="CallStack.php" hash="e607a88467d171eca2df47120094f691"/>
               <file name="Context.php" hash="d570e34a9565e3cad0781ee354bd4ef9"/>
               <file name="RendererInterface.php" hash="a34a484b2c7859696c214ade11208b04"/>
+              <file name="Table.php" hash="10eb3d85b25f98661731412caf89435f"/>
               <dir name="Log">
-                <file name="LogTable.php" hash="ace6bc645cbbcd0f5fb4cfd9b08e6859"/>
+                <file name="LogTable.php" hash="57b20710798261e8a277233ddf4aa661"/>
               </dir>
               <dir name="Mysql">
                 <file name="QueryTable.php" hash="38a9b601e5f1379285d07e4361d94ac1"/>
               </dir>
+              <dir name="Request">
+                <file name="ToolbarHandler.php" hash="462475f0c5af6ee1674523fa95b8332d"/>
+              </dir>
             </dir>
+            <file name="Toolbar.php" hash="06c0401453a13ae45bb14e5ee26341e7"/>
           </dir>
           <dir name="Controller">
             <file name="AbstractController.php" hash="df479a9daa699be75d49930cc7468648"/>
           </dir>
           <dir name="controllers">
             <file name="CacheController.php" hash="cba1eefa1c5b487abbd44eaa6167900b"/>
-            <file name="IndexController.php" hash="263e2bf4631e037fb61a5d1f131cb555"/>
+            <file name="IndexController.php" hash="088b32d8d6616d7027e18aed2177eb4b"/>
           </dir>
           <dir name="Db">
             <dir name="Statement">
@@ -371,47 +382,49 @@ nginx config&lt;/p&gt;
             </dir>
           </dir>
           <dir name="etc">
-            <file name="config.xml" hash="3e655889fd41aa91071c68fa0b63d93e"/>
-            <file name="development.xml" hash="569481da5b5fc6a17e0f69747ddb41be"/>
+            <file name="config.xml" hash="8003393b0794d688b33577d1d0e7def7"/>
+            <file name="development.xml" hash="5ca041f2c3683c795131c17276824e0a"/>
           </dir>
           <dir name="Helper">
             <file name="AbstractHelper.php" hash="f3b8fc47c99b7a9f492c09ee38d2a4dd"/>
-            <file name="Code.php" hash="5cd26ca017a787618fdf552e48ac0f72"/>
+            <file name="Code.php" hash="9325a909db6d4e4c00215410d8d32937"/>
             <file name="Context.php" hash="c8d0d66a13a558b26092fbe375643819"/>
-            <file name="Data.php" hash="d2a72158860ba97e4c493bec643e2bed"/>
-            <file name="Renderer.php" hash="5129f2242f9456cb72cd10fb205531af"/>
+            <file name="Data.php" hash="01c91a5ce354645b89ffb9f7edec2681"/>
+            <file name="Renderer.php" hash="4e1bc69441cc7bb0a5be7b640908ff6d"/>
             <file name="Rewrite.php" hash="5d14a5cade6df7fe4f0fdb14b381d21c"/>
-            <file name="Sql.php" hash="2daba313727d3376f63f5096f4c67532"/>
-            <file name="ValueExporter.php" hash="d5c47a798bf0bc63e22ac8e530c97513"/>
+            <file name="Sql.php" hash="dac8ad2ec5dd2419811c65abb60b8dc7"/>
+            <file name="ValueExporter.php" hash="42a51d69104617aeccc11acf86e862e9"/>
           </dir>
           <dir name="Model">
-            <file name="AppDev.php" hash="3452f2a7476bda585f2e117fe6b2007f"/>
-            <file name="Context.php" hash="6f88c38762b1cea9b61dceffa28d4bfe"/>
+            <file name="AppDev.php" hash="94e08efbb73221da5754beae621765d4"/>
+            <file name="Context.php" hash="e5bb05467e056a4538e4c4971efcc24d"/>
             <file name="ContextInterface.php" hash="6fa0b665a1f66469072c7a15064241fe"/>
-            <file name="DebugLoggerInterface.php" hash="fb77da964513216bced10423f9e9ef79"/>
-            <file name="Logger.php" hash="6b7a41a4b32d61c757291f4611bcb065"/>
-            <file name="Observer.php" hash="d470dd34415b67c1d210322cafbe6b52"/>
-            <file name="Profile.php" hash="b109854a402cb400d689939db515a8f7"/>
-            <file name="Profiler.php" hash="d656aa79765761d6af7d41c0692db62c"/>
+            <file name="Logger.php" hash="681b14bec2fe35284949d846307183a1"/>
+            <file name="LoggerInterface.php" hash="12fc1e5b210170d554387855babda960"/>
+            <file name="NullLogger.php" hash="2dd2abc704544069b24dde5b02a1c4a1"/>
+            <file name="Observer.php" hash="fb9c87531fda6fe2cefdbc0c36a9ed67"/>
+            <file name="Profile.php" hash="a4e56a719cbf9ef991c921f4baefc9ee"/>
+            <file name="Profiler.php" hash="f6d638fd55de32b64df81dacecbb783e"/>
+            <file name="Session.php" hash="98f2fdfbeb3ccabf6bd0c05870d568dc"/>
             <dir name="Collector">
-              <file name="AbstractDataCollector.php" hash="7a58e7a7f781fcb25596ec454a0941fa"/>
+              <file name="AbstractDataCollector.php" hash="770cc563fa01b3e2a2298dca54deed62"/>
               <file name="AjaxDataCollector.php" hash="8abe36cbc71801d9509a1607cb510872"/>
               <file name="CacheDataCollector.php" hash="121234aaeff67cfb7e367f4d0ea6ca74"/>
-              <file name="ConfigDataCollector.php" hash="2717afc87c5c67af0b09219c14ebb10f"/>
+              <file name="ConfigDataCollector.php" hash="9d799af590c67326efb708299a5adf1d"/>
               <file name="ContextDataCollector.php" hash="ea8e04938af2e1ec2a095306d8c0a07d"/>
               <file name="CustomerDataCollector.php" hash="b49edceafe5c60a2ffb96dc3c62b4a82"/>
               <file name="DataCollectorInterface.php" hash="33082cfb75eedf75b6af2c6afac3d782"/>
               <file name="EventDataCollector.php" hash="b54c69b72dd4694c33a8934c4588aa14"/>
               <file name="LateDataCollectorInterface.php" hash="11f0136ac985fbadde129c2de7082df1"/>
-              <file name="LayoutDataCollector.php" hash="a0161acecfe24eae72f1a23055d8dd31"/>
+              <file name="LayoutDataCollector.php" hash="2a84dd0fa9d871ce903d3147b9f2bab3"/>
               <file name="LogDataCollector.php" hash="ed5554e57957606f11debbf4f5d3b6a9"/>
               <file name="MemoryDataCollector.php" hash="6b9df2616c98fb717fe987650b05e839"/>
-              <file name="ModelDataCollector.php" hash="1942b69c4b7e205e85a03f400f25e357"/>
+              <file name="ModelDataCollector.php" hash="f234954b4b88992bf50b818b00cb4446"/>
               <file name="MysqlDataCollector.php" hash="6b22fb7c698632f38516ae67f5e72e3e"/>
-              <file name="RequestDataCollector.php" hash="2a7c8fcea477da650c6fde974fdddd54"/>
+              <file name="RequestDataCollector.php" hash="86e74b6db9948cc687424a638c408863"/>
               <file name="RewriteDataCollector.php" hash="94c7822840a6a8e56662df45c3c05a13"/>
               <file name="TimeDataCollector.php" hash="9ba56d95b0cdf1b736ec09c101bcc17a"/>
-              <file name="TranslationDataCollector.php" hash="f2dbb421aded73ecad1d28288c0852f2"/>
+              <file name="TranslationDataCollector.php" hash="7c061c064ba95604b89c9b5e01d00923"/>
             </dir>
             <dir name="Core">
               <file name="Cache.php" hash="4d5153b5ef8d3f32b01a20b6f33a694c"/>
@@ -423,26 +436,30 @@ nginx config&lt;/p&gt;
               <file name="ResponseHeaderBag.php" hash="d27b8d35c3a4fc7ff050f5971ffea835"/>
             </dir>
             <dir name="Logger">
-              <file name="DebugHandler.php" hash="2e64a8afb1f054668992ab9026155988"/>
+              <file name="DebugHandler.php" hash="d107142dc578dd4bb068ee81a959cb10"/>
+              <file name="DebugHandlerInterface.php" hash="d7ad84fb6fc5794be558abf0ad9f8803"/>
             </dir>
             <dir name="Observer">
-              <file name="Context.php" hash="46486a8e8d854dc8c022addae27eb713"/>
+              <file name="Context.php" hash="a48925aacf4a875899a0b6e42ff91b7d"/>
             </dir>
             <dir name="Profiler">
-              <file name="FileStorage.php" hash="0f7b9b499d7d0ef070db55d00608d086"/>
+              <file name="FileStorage.php" hash="bfe9fb9ddd17d5818fc0fb1d1b154ba8"/>
               <file name="StorageInterface.php" hash="fe90e695474f4354bd6481d904c6c56c"/>
             </dir>
           </dir>
           <dir name="overwrite">
-            <file name="Mage.php" hash="6141bb3e6e7e307d37e4bc9d92a409da"/>
+            <file name="Mage.php" hash="886a54281b80d314398aa193d6a2970e"/>
             <file name="MageCoreModelResource.php" hash="f800cbedca91b1ffbd522b7e2e9262ca"/>
             <file name="MageCoreModelResourceDbAbstract.php" hash="1cac148b8666cf267f8d3cfeca80a114"/>
-            <file name="MageCoreModelStore.php" hash="8b254445c375ecba32f02eb67566b759"/>
-            <file name="MageCoreModelTranslate.php" hash="981b052d60c99afbfce2499d624438de"/>
+            <file name="MageCoreModelStore.php" hash="18103f46ad50dd13e79b006bd7180b06"/>
+            <file name="MageCoreModelTranslate.php" hash="d8a97ad69d13c66ca1825c79f86620b3"/>
             <file name="MageEavModelEntityAbstract.php" hash="2f8f6ed49f554d0eb68a6ccf83464a5b"/>
           </dir>
         </dir>
       </dir>
+    </target>
+    <target name="magelib">
+      <file name="SqlFormatter.php" hash="679860fbd8cff0716ab1e86e62c96684"/>
     </target>
   </contents>
 </root>
