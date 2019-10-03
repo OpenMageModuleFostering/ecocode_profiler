@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Ecocode_Profiler",
+    "name": "OpenMageModuleFostering\/Ecocode_Profiler",
     "type": "magento-module",
     "license": "MIT",
     "homepage": "",
     "description": "Web Profiler for Magento 1.x",
     "authors": [
-    {
-        "name": "Justus Krapp",
-        "email": "jk@ecocode.de"
-    }
-],
+        {
+            "name": "Justus Krapp",
+            "email": "jk@ecocode.de"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
